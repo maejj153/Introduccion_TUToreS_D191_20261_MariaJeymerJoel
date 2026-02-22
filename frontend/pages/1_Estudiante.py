@@ -47,3 +47,4 @@ with col_der:
             if dudas.strip() == "":
                 st.warning("Sería útil escribir tus dudas, aunque sea breve.")
             st.success("¡Tutoría reservada con éxito!")
+            st.snow()
