@@ -33,5 +33,7 @@ with st.form("form_reserva"):
     dudas = st.text_area("¿Qué temas específicos quieres tratar? (Opcional)")
     
     if st.form_submit_button("Reservar Tutoría"):
+        if dudas.strip() == "": 
+            st.warning("Sería útil escribir tus dudas, aunque sea breve.")
         st.success("¡Tutoría reservada con éxito!")
         st.balloons() 
