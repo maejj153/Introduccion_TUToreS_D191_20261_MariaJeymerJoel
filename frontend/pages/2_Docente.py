@@ -2,10 +2,28 @@ import streamlit as st
 import pandas as pd
 import datetime
 
-# Configuración de la página
 st.set_page_config(page_title="Panel Docente", page_icon="👨‍🏫", layout="wide")
 
-# Banner superior sobrio
+# --- Protección de acceso ---
+if not st.session_state.get("autenticado"):
+    st.error("🔒 Debes iniciar sesión para acceder a esta página.")
+    st.page_link("main.py", label="Ir al Login", icon="🔑")
+    st.stop()
+
+if st.session_state.get("rol") != "Docente":
+    st.error("⛔ No tienes permiso para acceder a esta página.")
+    st.stop()
+
+# --- Botón cerrar sesión en barra lateral ---
+with st.sidebar:
+    st.markdown(f"👤 **{st.session_state.rol}**")
+    st.divider()
+    if st.button("🚪 Cerrar Sesión", use_container_width=True):
+        st.session_state.autenticado = False
+        st.session_state.rol = None
+        st.switch_page("main.py")
+
+# --- Contenido del panel ---
 st.markdown(
     """
     <div style='background-color:#1E3A8A; padding:25px; border-radius:8px;'>
@@ -20,10 +38,8 @@ st.markdown(
 
 st.divider()
 
-# Layout en dos columnas principales
-col_izq, col_der = st.columns([2,1])
+col_izq, col_der = st.columns([2, 1])
 
-# Columna izquierda: Próximas tutorías
 with col_izq:
     st.markdown("<h2 style='color:#1E3A8A;'>Mis Próximas Tutorías</h2>", unsafe_allow_html=True)
     tutorias = pd.DataFrame({
@@ -35,7 +51,6 @@ with col_izq:
     })
     st.dataframe(tutorias, use_container_width=True, hide_index=True)
 
-# Columna derecha: Publicar nuevo horario
 with col_der:
     st.markdown("<h2 style='color:#1E3A8A;'>Publicar Nuevo Horario</h2>", unsafe_allow_html=True)
     with st.form("form_horario"):
@@ -43,6 +58,6 @@ with col_der:
         hora = st.time_input("Hora de inicio")
         modalidad = st.selectbox("Modalidad", ["Presencial (Oficina)", "Virtual (Meet/Zoom)"])
         enlace = st.text_input("Enlace o Lugar (Ej: Sala 4)")
-        
+
         if st.form_submit_button("Publicar Horario", use_container_width=True):
             st.success("¡Horario publicado correctamente! Los estudiantes ya pueden verlo.")
