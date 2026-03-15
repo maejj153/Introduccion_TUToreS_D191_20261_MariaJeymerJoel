@@ -73,11 +73,19 @@ div[data-testid="stVerticalBlockBorderWrapper"] {
 }
 
 /* --- Inputs (Corrigiendo cuadros negros y letras blancas) --- */
-div[data-baseweb="input"], 
-div[data-baseweb="textarea"], 
-div[data-baseweb="select"] {
-    background-color: var(--uts-white) !important;
+div[data-baseweb="input"] > div,
+div[data-baseweb="textarea"] > div,
+div[data-baseweb="select"] > div {
+    background: var(--uts-white) !important;
+    border: 1px solid var(--uts-border) !important;
     border-radius: 8px !important;
+    color: var(--uts-text) !important;
+}
+div[data-baseweb="input"] > div:focus-within,
+div[data-baseweb="textarea"] > div:focus-within,
+div[data-baseweb="select"] > div:focus-within {
+    border-color: var(--uts-green) !important;
+    box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1) !important;
 }
 
 input, textarea {
@@ -96,6 +104,28 @@ label[data-testid="stWidgetLabel"] p {
 ::placeholder {
     color: #94a3b8 !important;
     opacity: 1;
+}
+
+/* --- Dataframe Forzar Light --- */
+div[data-testid="stDataFrame"] {
+    background-color: var(--uts-white) !important;
+    border: 1px solid var(--uts-border) !important;
+    border-radius: 10px !important;
+}
+
+/* Fix para selectbox dropdown items */
+div[role="listbox"] {
+    background-color: var(--uts-white) !important;
+    border: 1px solid var(--uts-border) !important;
+}
+
+div[role="option"] {
+    background-color: var(--uts-white) !important;
+    color: var(--uts-text) !important;
+}
+div[role="option"]:hover {
+    background-color: #f1f5f9 !important;
+    color: var(--uts-green) !important;
 }
 
 /* --- Botón primario (Verde UTS) --- */
