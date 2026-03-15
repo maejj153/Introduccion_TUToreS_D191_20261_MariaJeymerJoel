@@ -177,8 +177,10 @@ def login():
                     st.success(f"Bienvenido, {user['nombre'].split(' ')[0]}.")
                     time.sleep(0.4)
                     st.rerun()
+                elif not user:
+                    st.error("DEBUG: No se encontró ningún usuario con ese email.")
                 else:
-                    st.error("Credenciales incorrectas. Verifica e intenta de nuevo.")
+                    st.error("Credenciales incorrectas. Verifica la contraseña.")
 
         st.markdown("<br>", unsafe_allow_html=True)
         st.caption("¿Problemas para acceder? Contacta al administrador de tu institución.")
